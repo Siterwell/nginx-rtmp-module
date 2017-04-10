@@ -1101,9 +1101,10 @@ ngx_rtmp_record_node_avd(ngx_rtmp_session_t *s, ngx_rtmp_record_rec_ctx_t *rctx,
         next.sec  += (next.msec / 1000);
         next.msec %= 1000;
 
-        if (ngx_cached_time->sec  > next.sec ||
-           (ngx_cached_time->sec == next.sec &&
-           ngx_cached_time->msec > next.msec))
+        if (keyframe &&
+            (ngx_cached_time->sec  > next.sec ||
+             (ngx_cached_time->sec == next.sec &&
+              ngx_cached_time->msec > next.msec)))
         {
             ngx_rtmp_record_node_close(s, rctx);
             ngx_rtmp_record_node_open(s, rctx);
